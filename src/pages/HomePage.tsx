@@ -115,42 +115,46 @@ export default function HomePage() {
             <p className="text-lg text-gray-600">לחץ על כל מחלקה לקבלת מידע נוסף</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
             {departments.map((dept) => (
-              <div key={dept.id} className="relative">
-                <button
-                  onClick={() => handleDepartmentClick(dept.id)}
-                  className={`w-full p-6 rounded-2xl shadow-lg transition-all duration-300 text-right ${
-                    openDepartment === dept.id
-                      ? 'bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-2xl scale-105'
-                      : 'bg-white hover:shadow-xl hover:-translate-y-1'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <ChevronDown
-                      className={`w-5 h-5 transition-transform duration-300 ${
-                        openDepartment === dept.id ? 'rotate-180' : ''
-                      }`}
-                    />
-                    <div className={openDepartment === dept.id ? 'text-white' : 'text-cyan-600'}>
-                      {getIcon(dept.icon)}
-                    </div>
+              <button
+                key={dept.id}
+                onClick={() => handleDepartmentClick(dept.id)}
+                className={`p-6 rounded-2xl shadow-lg transition-all duration-300 ${
+                  openDepartment === dept.id
+                    ? 'bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-2xl scale-105'
+                    : 'bg-white hover:shadow-xl hover:-translate-y-1'
+                }`}
+              >
+                <div className="flex flex-col items-center text-center gap-3">
+                  <div className={openDepartment === dept.id ? 'text-white' : 'text-cyan-600'}>
+                    {getIcon(dept.icon)}
                   </div>
-                  <h3 className="text-xl font-bold mb-2">{dept.name_he}</h3>
+                  <h3 className="text-sm font-bold leading-tight">{dept.name_he}</h3>
+                </div>
+              </button>
+            ))}
+          </div>
 
-                  <div
-                    className={`overflow-hidden transition-all duration-300 ${
-                      openDepartment === dept.id ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
-                    }`}
-                  >
-                    <p className="text-sm leading-relaxed">
+          {openDepartment && (
+            <div className="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-3xl p-8 shadow-xl animate-fade-in">
+              {departments
+                .filter((dept) => dept.id === openDepartment)
+                .map((dept) => (
+                  <div key={dept.id} className="text-right">
+                    <div className="flex items-center justify-end gap-4 mb-6">
+                      <h3 className="text-3xl font-bold text-gray-900">{dept.name_he}</h3>
+                      <div className="text-cyan-600">
+                        {getIcon(dept.icon)}
+                      </div>
+                    </div>
+                    <p className="text-lg text-gray-700 leading-relaxed">
                       {dept.description_he}
                     </p>
                   </div>
-                </button>
-              </div>
-            ))}
-          </div>
+                ))}
+            </div>
+          )}
         </div>
       </section>
 
