@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { ChevronDown, Calendar, TrendingUp } from 'lucide-react';
+import { ChevronDown, Calendar, TrendingUp, Users, Target, Heart, Sparkles, MessageCircle, BookOpen } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import { supabase, Department, NewsUpdate } from '../lib/supabase';
 
@@ -195,6 +195,178 @@ export default function HomePage() {
                 הנחות מיוחדות בחנויות, מסעדות ועוד בכל רחבי העיר
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">הערכים שלנו</h2>
+            <p className="text-lg text-gray-600">העקרונות המנחים אותנו בכל פעולה</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="group p-6 rounded-2xl bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 transition-all duration-300">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <Target className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">שקיפות</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  פועלים בשקיפות מלאה מול הסטודנטים
+                </p>
+              </div>
+            </div>
+
+            <div className="group p-6 rounded-2xl bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 transition-all duration-300">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <Heart className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">מחויבות</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  מחויבים לשיפור חווית הלימודים
+                </p>
+              </div>
+            </div>
+
+            <div className="group p-6 rounded-2xl bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 transition-all duration-300">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <Sparkles className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">חדשנות</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  מחפשים דרכים חדשות לשפר את החיים בקמפוס
+                </p>
+              </div>
+            </div>
+
+            <div className="group p-6 rounded-2xl bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 transition-all duration-300">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <Users className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">שיתוף פעולה</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  עובדים יחד עם הסטודנטים והמוסד
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 px-4 bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">מספרים שמדברים בעד עצמם</h2>
+            <p className="text-lg text-gray-600">ההישגים שלנו השנה</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="bg-white p-8 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all duration-300">
+              <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-cyan-500 to-blue-600 mb-2">
+                5,000+
+              </div>
+              <p className="text-gray-600 font-semibold">סטודנטים פעילים</p>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all duration-300">
+              <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-cyan-500 to-blue-600 mb-2">
+                150+
+              </div>
+              <p className="text-gray-600 font-semibold">אירועים השנה</p>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all duration-300">
+              <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-cyan-500 to-blue-600 mb-2">
+                50+
+              </div>
+              <p className="text-gray-600 font-semibold">עסקים משתפי פעולה</p>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all duration-300">
+              <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-cyan-500 to-blue-600 mb-2">
+                24/7
+              </div>
+              <p className="text-gray-600 font-semibold">תמיכה לסטודנטים</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">איך אפשר להצטרף?</h2>
+            <p className="text-lg text-gray-600">הצטרפות פשוטה ומהירה</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="relative">
+              <div className="bg-gradient-to-br from-cyan-50 to-blue-50 p-8 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all duration-300">
+                <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                  1
+                </div>
+                <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icons.UserPlus className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">הרשמה</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  צור חשבון במערכת בקלות ובמהירות
+                </p>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="bg-gradient-to-br from-cyan-50 to-blue-50 p-8 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all duration-300">
+                <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                  2
+                </div>
+                <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icons.CheckCircle className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">אימות</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  אמת את מעמדך כסטודנט במוסד
+                </p>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="bg-gradient-to-br from-cyan-50 to-blue-50 p-8 rounded-2xl shadow-lg text-center hover:shadow-2xl transition-all duration-300">
+                <div className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                  3
+                </div>
+                <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icons.Sparkles className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">תהנה</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  קבל גישה לכל השירותים וההטבות
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 px-4 bg-gradient-to-br from-cyan-500 via-blue-600 to-blue-700 text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <MessageCircle className="w-16 h-16 mx-auto mb-6 animate-pulse" />
+          <h2 className="text-4xl font-bold mb-6">יש לך שאלות?</h2>
+          <p className="text-xl mb-8 leading-relaxed opacity-90">
+            הצוות שלנו כאן כדי לעזור לך. צור קשר בכל דרך שנוחה לך
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <button className="px-8 py-4 bg-white text-blue-600 rounded-full font-semibold hover:bg-blue-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105">
+              שלח לנו הודעה
+            </button>
+            <button className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-full font-semibold hover:bg-white/10 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105">
+              לעמוד יצירת קשר
+            </button>
           </div>
         </div>
       </section>
