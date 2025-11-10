@@ -62,7 +62,7 @@ export default function GalleryPage() {
                 <div className="p-4">
                   <h3 className="text-lg font-bold text-gray-900 mb-2 text-right">{image.title_he}</h3>
                   <div className="flex items-center gap-2 text-sm text-gray-600 justify-end">
-                    <span>{new Date(image.event_date).toLocaleDateString('he-IL')}</span>
+                    <span>{image.event_date ? new Date(image.event_date).toLocaleDateString('he-IL') : ''}</span>
                     <Calendar className="w-4 h-4" />
                   </div>
                 </div>
@@ -106,7 +106,7 @@ export default function GalleryPage() {
                 <p className="text-lg text-white/90 mb-3 text-right">{selectedImage.description_he}</p>
               )}
               <div className="flex items-center gap-2 text-sm text-white/80 justify-end">
-                <span>{new Date(selectedImage.event_date).toLocaleDateString('he-IL')}</span>
+                <span>{selectedImage.event_date ? new Date(selectedImage.event_date).toLocaleDateString('he-IL') : ''}</span>
                 <Calendar className="w-4 h-4" />
               </div>
             </div>

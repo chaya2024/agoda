@@ -58,7 +58,7 @@ export default function RightsPage() {
                       openCategory === category.id ? 'rotate-180' : ''
                     }`}
                   />
-                  <h2 className="text-2xl font-bold text-gray-900">{category.title_he}</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">{category.name_he}</h2>
                 </button>
 
                 <div
