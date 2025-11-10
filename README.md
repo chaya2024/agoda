@@ -2,6 +2,8 @@
 
 אתר אינטרנט חדש ומתקדם לאגודת הסטודנטים, בנוי עם React, TypeScript, ו-Supabase.
 
+> ⚠️ **רואה מסך לבן?** עבור ל-[SETUP_HE.md](./SETUP_HE.md) למדריך הפתרון המהיר!
+
 ## תכונות עיקריות
 
 - 🎨 **עיצוב מודרני ואטרקטיבי** - עיצוב נקי ומרשים עם אנימציות חלקות
