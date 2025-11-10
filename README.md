@@ -1,129 +1,145 @@
-# אגודת הסטודנטים - Student Union Website
+# אגודת הסטודנטים - אתר מודרני ומתקדם
 
-## מבנה הפרויקט / Project Structure
+אתר אינטרנט חדש ומתקדם לאגודת הסטודנטים, בנוי עם React, TypeScript, ו-Supabase.
 
-```
-src/
-├── backend/                 # Backend Layer
-│   ├── services/           # Business Logic Services
-│   │   ├── AuthService.ts
-│   │   └── ContentService.ts
-│   ├── repositories/       # Data Access Layer
-│   │   ├── ProfileRepository.ts
-│   │   ├── DepartmentRepository.ts
-│   │   ├── NewsRepository.ts
-│   │   ├── GalleryRepository.ts
-│   │   ├── StoreRepository.ts
-│   │   └── RightsRepository.ts
-│   ├── types/             # TypeScript Types & Interfaces
-│   │   └── index.ts
-│   └── utils/             # Backend Utilities
-│       └── supabase.ts
-│
-├── frontend/              # Frontend Layer
-│   ├── components/        # React Components
-│   │   ├── Navigation.tsx
-│   │   ├── ContactPanel.tsx
-│   │   ├── AccessibilityPanel.tsx
-│   │   └── AuthModal.tsx
-│   ├── pages/            # Page Components
-│   │   ├── HomePage.tsx
-│   │   ├── AboutPage.tsx
-│   │   ├── GalleryPage.tsx
-│   │   ├── StorePage.tsx
-│   │   └── RightsPage.tsx
-│   ├── contexts/         # React Contexts
-│   │   ├── AuthContext.tsx
-│   │   └── AccessibilityContext.tsx
-│   ├── hooks/           # Custom React Hooks
-│   └── utils/           # Frontend Utilities
-│
-├── App.tsx              # Main App Component
-├── main.tsx            # Application Entry Point
-└── index.css           # Global Styles
-```
+## תכונות עיקריות
 
-## תכונות / Features
+- 🎨 **עיצוב מודרני ואטרקטיבי** - עיצוב נקי ומרשים עם אנימציות חלקות
+- 📱 **רספונסיבי מלא** - תמיכה בכל סוגי המכשירים (מובייל, טאבלט, שולחני)
+- ♿ **נגישות מלאה** - כלי נגישות מובנים (גודל גופן, ניגודיות, ניווט מקלדת)
+- 🔐 **מערכת משתמשים** - הרשמה והתחברות מאובטחת
+- 📰 **ניהול תוכן דינמי** - חדשות, גלריה, מוצרים וזכויות
+- 💬 **פאנל יצירת קשר** - פאנל צד נגיש תמיד
+- 🎯 **מחלקות אינטראקטיביות** - ניווט קל בין מחלקות האגודה
 
-### Backend
-- **Service Layer**: עיבוד לוגיקה עסקית מרכזית
-- **Repository Pattern**: הפרדה של גישה למידע
-- **Type Safety**: הגדרות TypeScript מלאות
-- **Supabase Integration**: אינטגרציה עם Supabase לניהול מידע ואימות
+## טכנולוגיות
 
 ### Frontend
-- **Component-Based**: ארכיטקטורת רכיבים מודולרית
-- **Context API**: ניהול state גלובלי
-- **Responsive Design**: תמיכה מלאה במובייל וטאבלט
-- **Accessibility**: תכונות נגישות מלאות
+- **React 18** - ספריית UI מודרנית
+- **TypeScript** - שפת תכנות עם typing חזק
+- **Vite** - כלי build מהיר
+- **Tailwind CSS** - framework עיצוב utility-first
+- **React Router** - ניתוב בצד הלקוח
+- **Lucide React** - אייקונים מודרניים
 
-## התקנה / Installation
+### Backend & Database
+- **Supabase** - פלטפורמת Backend-as-a-Service
+  - PostgreSQL database
+  - אימות משתמשים
+  - Real-time subscriptions
+  - Row Level Security
 
-```bash
-npm install
-```
+## התקנה והפעלה
 
-## הרצה מקומית / Run Locally
+### דרישות מקדימות
+- Node.js (גרסה 18 ומעלה)
+- npm או yarn
+- חשבון Supabase
 
-```bash
-npm run dev
-```
+### שלבי התקנה
 
-## בנייה / Build
+1. **שיבוט הפרויקט**
+   ```bash
+   git clone <repository-url>
+   cd project
+   ```
+
+2. **התקנת dependencies**
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+3. **הגדרת משתני סביבה**
+
+   צור קובץ `.env` בתיקיית `frontend`:
+   ```
+   VITE_SUPABASE_URL=your_supabase_project_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+4. **הגדרת מסד הנתונים**
+
+   הפעל את ה-migration ב-Supabase:
+   - היכנס ל-Supabase Dashboard
+   - עבור ל-SQL Editor
+   - הרץ את הקובץ `supabase/migrations/20250110_create_student_union_schema.sql`
+
+5. **הפעלת שרת הפיתוח**
+   ```bash
+   npm run dev
+   ```
+
+   האתר יהיה זמין בכתובת: `http://localhost:5173`
+
+## בנייה לפרודקשן
 
 ```bash
 npm run build
 ```
 
-## טכנולוגיות / Technologies
+הקבצים הסטטיים ייבנו בתיקייה `frontend/dist/`.
 
-- **Frontend**: React 18, TypeScript, Tailwind CSS
-- **Backend**: Supabase (PostgreSQL + Auth)
-- **Build Tool**: Vite
-- **Icons**: Lucide React
+## פריסה ל-Azure
 
-## משתני סביבה / Environment Variables
+### אפשרות 1: Azure Static Web Apps
 
-הגדר את המשתנים הבאים בקובץ `.env`:
+1. צור Azure Static Web App חדש
+2. חבר את ה-repository שלך
+3. הגדר את הקונפיגורציה:
+   - **Build preset**: Vite
+   - **App location**: `/frontend`
+   - **Output location**: `dist`
+
+### אפשרות 2: Azure App Service
+
+1. צור Azure App Service (Node.js)
+2. הגדר deployment מ-GitHub/Azure DevOps
+3. הוסף משתני סביבה בהגדרות App Service
+
+## מבנה הפרויקט
 
 ```
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+project/
+├── frontend/                 # אפליקציית React
+│   ├── src/
+│   │   ├── components/      # קומפוננטות משותפות
+│   │   ├── contexts/        # React contexts
+│   │   ├── lib/            # utilities ו-helpers
+│   │   ├── pages/          # דפים ראשיים
+│   │   ├── App.tsx         # קומפוננטת App ראשית
+│   │   └── main.tsx        # נקודת כניסה
+│   ├── public/             # קבצים סטטיים
+│   └── package.json
+├── supabase/
+│   └── migrations/         # database migrations
+└── README.md
 ```
 
-## מבנה Database
+## דפים ראשיים
 
-### Tables:
-- **profiles** - פרופילי משתמשים
-- **departments** - מחלקות האגודה
-- **news_updates** - חדשות ועדכונים
-- **gallery_images** - תמונות גלריה
-- **store_products** - מוצרי החנות
-- **rights_categories** - קטגוריות זכויות
+- **דף הבית** (`/`) - מידע כללי, מחלקות, וחדשות
+- **אודות** (`/about`) - אודות האגודה והצוות
+- **גלריה** (`/gallery`) - תמונות מאירועים
+- **חנות האגודה** (`/store`) - מוצרים ומרצ'נדייז
+- **זכויות** (`/rights`) - זכויות סטודנטים
+- **התחברות** (`/login`) - התחברות למערכת
+- **הרשמה** (`/register`) - הרשמה חדשה
 
-## שימוש ב-Backend Services
+## תרומה לפרויקט
 
-```typescript
-import { AuthService } from './backend/services/AuthService';
-import { ContentService } from './backend/services/ContentService';
+נשמח לקבל תרומות! אנא פתחו Pull Request או דווחו על בעיות דרך Issues.
 
-// Authentication
-await AuthService.signUp({ email, password, fullName, studentId });
-await AuthService.signIn({ email, password });
-await AuthService.signOut();
+## רישיון
 
-// Content
-const departments = await ContentService.getDepartments();
-const news = await ContentService.getNews(3);
-const images = await ContentService.getGalleryImages();
-const products = await ContentService.getStoreProducts();
-const rights = await ContentService.getRightsCategories();
-```
+MIT License - ראו קובץ LICENSE לפרטים נוספים.
 
-## עקרונות ארכיטקטורה / Architecture Principles
+## תמיכה
 
-1. **Separation of Concerns**: הפרדה ברורה בין frontend ו-backend
-2. **Single Responsibility**: כל קובץ אחראי על תפקיד אחד בלבד
-3. **DRY (Don't Repeat Yourself)**: שימוש חוזר בקוד דרך services ו-repositories
-4. **Type Safety**: שימוש מלא ב-TypeScript למניעת שגיאות
-5. **Scalability**: קל להוסיף תכונות חדשות ללא שינוי הקוד הקיים
+לשאלות ותמיכה, צרו קשר דרך:
+- דוא"ל: info@studentunion.ac.il
+- טלפון: 03-1234567
+
+---
+
+בנוי עם ❤️ על ידי צוות אגודת הסטודנטים
