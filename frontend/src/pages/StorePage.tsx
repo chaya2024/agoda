@@ -1,31 +1,29 @@
-import { useEffect, useState } from 'react';
+﻿import { useState } from 'react';
 import { ShoppingCart, CheckCircle, XCircle } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import type { StoreProduct } from '../lib/supabase';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  inStock: boolean;
+  image: string;
+}
 
 const StorePage = () => {
-  const [products, setProducts] = useState<StoreProduct[]>([]);
   const [filter, setFilter] = useState<string>('all');
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadProducts();
-  }, [filter]);
-
-  const loadProducts = async () => {
-    setLoading(true);
-    let query = supabase.from('store_products').select('*').order('name');
-
-    if (filter !== 'all') {
-      query = query.eq('category', filter);
-    }
-
-    const { data } = await query;
-    if (data) setProducts(data);
-    setLoading(false);
-  };
+  const products: Product[] = [
+    { id: 1, name: 'חולצת האגודה', price: 50, category: 'ביגוד', inStock: true, image: 'https://via.placeholder.com/300x400?text=Shirt' },
+    { id: 2, name: 'תיק גב', price: 80, category: 'אקססוריז', inStock: true, image: 'https://via.placeholder.com/300x400?text=Backpack' },
+    { id: 3, name: 'ספר לימוד', price: 120, category: 'ספרים', inStock: false, image: 'https://via.placeholder.com/300x400?text=Book' },
+    { id: 4, name: 'מחברת A4', price: 15, category: 'ציוד לימודי', inStock: true, image: 'https://via.placeholder.com/300x400?text=Notebook' },
+    { id: 5, name: 'כובע', price: 35, category: 'ביגוד', inStock: true, image: 'https://via.placeholder.com/300x400?text=Hat' },
+    { id: 6, name: 'בקבוק מים', price: 25, category: 'אקססוריז', inStock: true, image: 'https://via.placeholder.com/300x400?text=Bottle' },
+  ];
 
   const categories = ['all', 'ביגוד', 'אקססוריז', 'ספרים', 'ציוד לימודי'];
+  const filteredProducts = filter === 'all' ? products : products.filter(p => p.category === filter);
 
   return (
     <div className="min-h-screen pt-20 pb-12">
@@ -40,7 +38,7 @@ const StorePage = () => {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-6 py-2 rounded-full font-medium transition-all duration-200 ${
+              className={`px-6 py-2 rounded-full font-medium transition-all ${
                 filter === cat
                   ? 'bg-primary-500 text-white shadow-md'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -51,74 +49,53 @@ const StorePage = () => {
           ))}
         </div>
 
-        {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="bg-white rounded-2xl shadow-lg overflow-hidden animate-pulse">
-                <div className="aspect-square bg-gray-200"></div>
-                <div className="p-6 space-y-3">
-                  <div className="h-6 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-10 bg-gray-200 rounded"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.map((product) => (
-              <div key={product.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                <div className="aspect-square overflow-hidden bg-gray-100">
-                  {product.image_url ? (
-                    <img
-                      src={product.image_url}
-                      alt={product.name}
-                      className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <ShoppingCart className="w-20 h-20 text-gray-300" />
-                    </div>
-                  )}
-                </div>
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      {product.in_stock ? (
-                        <div className="flex items-center gap-1 text-green-600">
-                          <CheckCircle className="w-5 h-5" />
-                          <span className="text-sm font-medium">במלאי</span>
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-1 text-red-600">
-                          <XCircle className="w-5 h-5" />
-                          <span className="text-sm font-medium">אזל</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-primary-600">₪{product.price.toFixed(2)}</p>
-                    </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProducts.map((product) => (
+            <div key={product.id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="relative aspect-[3/4]">
+                <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                {!product.inStock && (
+                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <span className="bg-red-500 text-white px-4 py-2 rounded-full font-bold">אזל מהמלאי</span>
                   </div>
-
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 text-right">{product.name}</h3>
-                  <p className="text-sm text-gray-600 text-right leading-relaxed mb-4 line-clamp-2">{product.description}</p>
-
-                  <button
-                    disabled={!product.in_stock}
-                    className={`w-full py-3 rounded-lg font-medium transition-all duration-300 ${
-                      product.in_stock
-                        ? 'bg-gradient-to-r from-primary-500 to-primary-700 text-white hover:from-primary-600 hover:to-primary-800 shadow-md hover:shadow-lg'
-                        : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                    }`}
-                  >
-                    {product.in_stock ? 'הוסף לסל' : 'לא זמין'}
-                  </button>
-                </div>
+                )}
               </div>
-            ))}
-          </div>
-        )}
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-xl font-bold">{product.name}</h3>
+                  <span className="text-sm text-gray-500">{product.category}</span>
+                </div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-2xl font-bold text-primary-600">₪{product.price}</span>
+                  <div className="flex items-center gap-1">
+                    {product.inStock ? (
+                      <>
+                        <CheckCircle className="w-5 h-5 text-green-500" />
+                        <span className="text-sm text-green-600">במלאי</span>
+                      </>
+                    ) : (
+                      <>
+                        <XCircle className="w-5 h-5 text-red-500" />
+                        <span className="text-sm text-red-600">לא זמין</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+                <button
+                  disabled={!product.inStock}
+                  className={`w-full py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all ${
+                    product.inStock
+                      ? 'bg-primary-500 text-white hover:bg-primary-600'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  הוסף לסל
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

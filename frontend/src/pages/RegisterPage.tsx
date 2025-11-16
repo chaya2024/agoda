@@ -1,63 +1,89 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserPlus, Mail, Lock, User, Hash } from 'lucide-react';
+import { UserPlus, Mail, Lock, User, Phone, AlertCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const RegisterPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [studentId, setStudentId] = useState('');
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+  });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { signUp } = useAuth();
   const navigate = useNavigate();
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('הסיסמאות אינן תואמות');
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError('הסיסמה חייבת להכיל לפחות 6 תווים');
+      return;
+    }
+
     setLoading(true);
 
-    const { error } = await signUp(email, password, fullName, studentId);
-
-    if (error) {
-      setError('שגיאה ברישום. אנא נסה שנית.');
+    try {
+      const { error: signUpError } = await signUp(formData.email, formData.password, formData.fullName, formData.phone);
+      if (signUpError) {
+        setError('שגיאה בהרשמה. אנא נסה שוב.');
+      } else {
+        navigate('/');
+      }
+    } catch (err) {
+      setError('שגיאה בהרשמה. אנא נסה שוב.');
+    } finally {
       setLoading(false);
-    } else {
-      navigate('/');
     }
   };
 
   return (
-    <div className="min-h-screen pt-20 flex items-center justify-center bg-gradient-to-br from-primary-50 to-blue-50 px-4 py-12">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center px-4 py-12">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-gradient-to-br from-secondary-500 to-secondary-700 rounded-full flex items-center justify-center mx-auto mb-4">
-            <UserPlus className="w-10 h-10 text-white" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4">
+            <UserPlus className="w-8 h-8 text-primary-600" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">הרשמה</h1>
-          <p className="text-gray-600">הצטרף לאגודת הסטודנטים</p>
+          <h1 className="text-3xl font-bold text-gray-900">הרשמה</h1>
+          <p className="text-gray-600 mt-2">צור חשבון חדש</p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600 text-center">
-            {error}
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <p className="text-red-800 text-sm">{error}</p>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               שם מלא
             </label>
             <div className="relative">
-              <User className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <User className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="text"
-                id="fullName"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="ישראל ישראלי"
                 required
               />
@@ -65,55 +91,74 @@ const RegisterPage = () => {
           </div>
 
           <div>
-            <label htmlFor="studentId" className="block text-sm font-medium text-gray-700 mb-2">
-              תעודת סטודנט (אופציונלי)
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              אימייל
             </label>
             <div className="relative">
-              <Hash className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                id="studentId"
-                value={studentId}
-                onChange={(e) => setStudentId(e.target.value)}
-                className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                placeholder="123456789"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              כתובת דוא"ל
-            </label>
-            <div className="relative">
-              <Mail className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="your@email.com"
                 required
+                dir="ltr"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              טלפון
+            </label>
+            <div className="relative">
+              <Phone className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                placeholder="050-1234567"
+                dir="ltr"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               סיסמה
             </label>
             <div className="relative">
-              <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="••••••••"
                 required
-                minLength={6}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              אימות סיסמה
+            </label>
+            <div className="relative">
+              <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                placeholder="••••••••"
+                required
               />
             </div>
           </div>
@@ -121,9 +166,7 @@ const RegisterPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 bg-gradient-to-r from-secondary-500 to-secondary-700 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all duration-200 ${
-              loading ? 'opacity-50 cursor-not-allowed' : 'hover:from-secondary-600 hover:to-secondary-800'
-            }`}
+            className="w-full bg-primary-600 text-white py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'נרשם...' : 'הירשם'}
           </button>
@@ -132,7 +175,7 @@ const RegisterPage = () => {
         <div className="mt-6 text-center">
           <p className="text-gray-600">
             כבר יש לך חשבון?{' '}
-            <Link to="/login" className="text-primary-600 hover:text-primary-700 font-medium">
+            <Link to="/login" className="text-primary-600 font-semibold hover:text-primary-700">
               התחבר
             </Link>
           </p>

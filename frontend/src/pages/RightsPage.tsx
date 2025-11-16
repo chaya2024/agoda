@@ -1,92 +1,102 @@
-import { useEffect, useState } from 'react';
-import { Shield, ChevronDown } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import type { Right } from '../lib/supabase';
+﻿import { useState } from 'react';
+import { Shield, ChevronDown, ChevronUp } from 'lucide-react';
 
 const RightsPage = () => {
-  const [rights, setRights] = useState<Right[]>([]);
-  const [openCategory, setOpenCategory] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
 
-  useEffect(() => {
-    loadRights();
-  }, []);
+  const rights = [
+    {
+      id: 1,
+      title: 'זכות לייצוג',
+      description: 'כל סטודנט זכאי לייצוג הולם מול הנהלת המכללה',
+      details: 'האגודה מייצגת את הסטודנטים בכל הנושאים האקדמיים והמנהליים, ומבטיחה שקולכם נשמע בכל ההחלטות החשובות.'
+    },
+    {
+      id: 2,
+      title: 'זכות להנחות',
+      description: 'הנחות מיוחדות לסטודנטים בעסקים שונים',
+      details: 'חברי האגודה זכאים להנחות בחנויות, מסעדות, ספורט ובידור ברחבי הארץ.'
+    },
+    {
+      id: 3,
+      title: 'זכות לפעילויות',
+      description: 'גישה לאירועים ופעילויות של האגודה',
+      details: 'אירועי תרבות, ספורט, סדנאות וערבי היכרות לאורך כל השנה.'
+    },
+    {
+      id: 4,
+      title: 'זכות לסיוע',
+      description: 'סיוע במצבי משבר ובעיות אקדמיות',
+      details: 'האגודה מספקת תמיכה וסיוע בכל נושא אקדמי, חברתי או כלכלי.'
+    },
+  ];
 
-  const loadRights = async () => {
-    const { data } = await supabase.from('rights').select('*').order('order_index');
-    if (data) {
-      setRights(data);
-      if (data.length > 0) setOpenCategory(data[0].category);
-    }
-    setLoading(false);
+  const toggleExpand = (id: number) => {
+    setExpandedId(expandedId === id ? null : id);
   };
 
-  const categories = [...new Set(rights.map((r) => r.category))];
-  const groupedRights = categories.map((cat) => ({
-    category: cat,
-    items: rights.filter((r) => r.category === cat),
-  }));
-
   return (
-    <div className="min-h-screen pt-20 pb-12">
-      <section className="py-20 px-4 bg-gradient-to-br from-primary-500 to-primary-700 text-white">
-        <div className="max-w-4xl mx-auto text-center">
+    <div className="min-h-screen bg-gray-50">
+      <section className="bg-gradient-to-br from-primary-500 to-primary-700 text-white py-20">
+        <div className="max-w-4xl mx-auto px-4 text-center">
           <Shield className="w-20 h-20 mx-auto mb-6" />
-          <h1 className="text-5xl font-bold mb-6">זכויות הסטודנטים</h1>
-          <p className="text-xl leading-relaxed">
-            כל סטודנט זכאי למגוון זכויות והטבות. כאן תמצאו את כל המידע החשוב שצריך לדעת
+          <h1 className="text-5xl font-bold mb-4">זכויות הסטודנטים</h1>
+          <p className="text-xl text-white/90">
+            כל מה שאתם צריכים לדעת על הזכויות שלכם כסטודנטים
           </p>
         </div>
       </section>
 
-      <div className="max-w-5xl mx-auto px-4 py-12">
-        {loading ? (
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto">
           <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-2xl shadow-lg p-6 animate-pulse">
-                <div className="h-8 bg-gray-200 rounded mb-4"></div>
-                <div className="h-20 bg-gray-200 rounded"></div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {groupedRights.map((group) => (
-              <div key={group.category} className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            {rights.map((right) => (
+              <div
+                key={right.id}
+                className="bg-white rounded-xl shadow-md overflow-hidden transition-all"
+              >
                 <button
-                  onClick={() => setOpenCategory(openCategory === group.category ? null : group.category)}
-                  className="w-full p-6 flex items-center justify-between text-right hover:bg-gray-50 transition-colors"
+                  onClick={() => toggleExpand(right.id)}
+                  className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
                 >
-                  <ChevronDown
-                    className={`w-6 h-6 text-primary-600 transition-transform duration-300 flex-shrink-0 ${
-                      openCategory === group.category ? 'rotate-180' : ''
-                    }`}
-                  />
-                  <h2 className="text-2xl font-bold text-gray-900">{group.category}</h2>
-                </button>
-
-                <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    openCategory === group.category ? 'max-h-[2000px]' : 'max-h-0'
-                  }`}
-                >
-                  <div className="p-6 pt-0 border-t border-gray-100 space-y-6">
-                    {group.items.map((right) => (
-                      <div key={right.id} className="border-r-4 border-primary-500 pr-4">
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">{right.title}</h3>
-                        <div
-                          className="prose prose-lg max-w-none text-right text-gray-600"
-                          dangerouslySetInnerHTML={{ __html: right.content }}
-                        />
-                      </div>
-                    ))}
+                  <div className="flex items-center gap-4">
+                    <Shield className="w-6 h-6 text-primary-600" />
+                    <div className="text-right">
+                      <h3 className="text-xl font-bold">{right.title}</h3>
+                      <p className="text-gray-600">{right.description}</p>
+                    </div>
                   </div>
-                </div>
+                  {expandedId === right.id ? (
+                    <ChevronUp className="w-6 h-6 text-gray-400" />
+                  ) : (
+                    <ChevronDown className="w-6 h-6 text-gray-400" />
+                  )}
+                </button>
+                {expandedId === right.id && (
+                  <div className="px-6 py-4 bg-gray-50 border-t">
+                    <p className="text-gray-700">{right.details}</p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      </section>
+
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-6">צריכים עזרה?</h2>
+          <p className="text-xl text-gray-600 mb-8">
+            האגודה כאן בשבילכם! פנו אלינו בכל שאלה או בעיה
+          </p>
+          <a
+            href="mailto:info@agoda.co.il"
+            className="inline-block bg-primary-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-primary-700 transition-colors"
+          >
+            צור קשר
+          </a>
+        </div>
+      </section>
     </div>
   );
 };

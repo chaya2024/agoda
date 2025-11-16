@@ -1,32 +1,28 @@
-import { useEffect, useState } from 'react';
-import { X, Calendar } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import type { GalleryImage } from '../lib/supabase';
+﻿import { useState } from 'react';
+import { X } from 'lucide-react';
+
+interface GalleryImage {
+  id: number;
+  title: string;
+  category: string;
+  url: string;
+}
 
 const GalleryPage = () => {
-  const [images, setImages] = useState<GalleryImage[]>([]);
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [filter, setFilter] = useState<string>('all');
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadImages();
-  }, [filter]);
-
-  const loadImages = async () => {
-    setLoading(true);
-    let query = supabase.from('gallery_images').select('*').order('event_date', { ascending: false });
-
-    if (filter !== 'all') {
-      query = query.eq('category', filter);
-    }
-
-    const { data } = await query;
-    if (data) setImages(data);
-    setLoading(false);
-  };
+  const images: GalleryImage[] = [
+    { id: 1, title: 'אירוע פתיחת שנה', category: 'אירועים', url: 'https://via.placeholder.com/400x300?text=Event+1' },
+    { id: 2, title: 'יום ספורט', category: 'פעילויות', url: 'https://via.placeholder.com/400x300?text=Event+2' },
+    { id: 3, title: 'חגיגת סיום', category: 'חגיגות', url: 'https://via.placeholder.com/400x300?text=Event+3' },
+    { id: 4, title: 'פעילות קהילתית', category: 'קהילה', url: 'https://via.placeholder.com/400x300?text=Event+4' },
+    { id: 5, title: 'הופעה מוזיקלית', category: 'אירועים', url: 'https://via.placeholder.com/400x300?text=Event+5' },
+    { id: 6, title: 'סדנת יצירה', category: 'פעילויות', url: 'https://via.placeholder.com/400x300?text=Event+6' },
+  ];
 
   const categories = ['all', 'אירועים', 'פעילויות', 'חגיגות', 'קהילה'];
+  const filteredImages = filter === 'all' ? images : images.filter(img => img.category === filter);
 
   return (
     <div className="min-h-screen pt-20 pb-12">
@@ -41,7 +37,7 @@ const GalleryPage = () => {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-6 py-2 rounded-full font-medium transition-all duration-200 ${
+              className={`px-6 py-2 rounded-full font-medium transition-all ${
                 filter === cat
                   ? 'bg-primary-500 text-white shadow-md'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -52,71 +48,41 @@ const GalleryPage = () => {
           ))}
         </div>
 
-        {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="aspect-square bg-gray-200 rounded-2xl animate-pulse"></div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {images.map((image) => (
-              <div
-                key={image.id}
-                onClick={() => setSelectedImage(image)}
-                className="group cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
-              >
-                <div className="relative aspect-square overflow-hidden">
-                  <img
-                    src={image.image_url}
-                    alt={image.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="absolute bottom-0 p-4 text-white">
-                      <h3 className="font-bold text-lg mb-1">{image.title}</h3>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Calendar className="w-4 h-4" />
-                        {new Date(image.event_date).toLocaleDateString('he-IL')}
-                      </div>
-                    </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredImages.map((image) => (
+            <div
+              key={image.id}
+              onClick={() => setSelectedImage(image)}
+              className="cursor-pointer group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all"
+            >
+              <div className="relative aspect-[4/3]">
+                <img src={image.url} alt={image.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <h3 className="text-white font-bold text-lg">{image.title}</h3>
+                    <p className="text-white/80 text-sm">{image.category}</p>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+            </div>
+          ))}
+        </div>
 
-      {selectedImage && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 animate-fade-in"
-          onClick={() => setSelectedImage(null)}
-        >
-          <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute top-4 left-4 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
-          >
-            <X className="w-6 h-6" />
-          </button>
-
-          <div className="max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={selectedImage.image_url}
-              alt={selectedImage.title}
-              className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-            />
-            <div className="mt-6 text-white text-center">
-              <h2 className="text-3xl font-bold mb-2">{selectedImage.title}</h2>
-              {selectedImage.description && <p className="text-lg mb-3">{selectedImage.description}</p>}
-              <div className="flex items-center justify-center gap-2 text-sm">
-                <Calendar className="w-4 h-4" />
-                {new Date(selectedImage.event_date).toLocaleDateString('he-IL')}
+        {selectedImage && (
+          <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4" onClick={() => setSelectedImage(null)}>
+            <button onClick={() => setSelectedImage(null)} className="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+              <X className="w-6 h-6" />
+            </button>
+            <div className="max-w-4xl w-full">
+              <img src={selectedImage.url} alt={selectedImage.title} className="w-full rounded-lg" />
+              <div className="bg-white mt-4 p-4 rounded-lg">
+                <h3 className="text-2xl font-bold mb-2">{selectedImage.title}</h3>
+                <p className="text-gray-600">{selectedImage.category}</p>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
