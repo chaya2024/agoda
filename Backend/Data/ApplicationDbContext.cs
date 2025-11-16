@@ -13,6 +13,7 @@ namespace Backend.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<TestTable> TestTables { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
