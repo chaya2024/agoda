@@ -1,9 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { AccessibilityProvider } from './contexts/AccessibilityContext';
-import Navigation from './components/Navigation';
-import AccessibilityPanel from './components/AccessibilityPanel';
-import ContactPanel from './components/ContactPanel';
+import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import GalleryPage from './pages/GalleryPage';
@@ -17,20 +15,20 @@ function App() {
     <Router>
       <AuthProvider>
         <AccessibilityProvider>
-          <div className="min-h-screen bg-white">
-            <Navigation />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/gallery" element={<GalleryPage />} />
-              <Route path="/store" element={<StorePage />} />
-              <Route path="/rights" element={<RightsPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-            </Routes>
-            <AccessibilityPanel />
-            <ContactPanel />
-          </div>
+          <Layout>
+              <main className="pt-20">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/gallery" element={<GalleryPage />} />
+                <Route path="/store" element={<StorePage />} />
+                <Route path="/rights" element={<RightsPage />} />
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+              </Routes>
+            </main>
+          </Layout>
         </AccessibilityProvider>
       </AuthProvider>
     </Router>

@@ -76,7 +76,7 @@ const Navigation = () => {
                   to="/profile"
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 hover:bg-primary-200 hover:text-primary-600 transition-all duration-200"                >
                   <User className="w-5 h-5" />
-                  <span className="font-medium">{user.full_name}</span>
+                  <span className="font-medium">{user.fullName}</span>
                 </Link>
                 <button
                   onClick={handleSignOut}
@@ -136,7 +136,7 @@ const Navigation = () => {
                     className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50"
                   >
                     <User className="w-5 h-5" />
-                    <span className="font-medium">{user.full_name}</span>
+                    <span className="font-medium">{user.fullName}</span>
                   </Link>
                   <button
                     onClick={() => {
