@@ -38,7 +38,7 @@ const RightsPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <section className="bg-gradient-to-br from-primary-500 to-primary-700 text-white py-20">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+        <div className="max-w-7xl mx-auto px-4 text-center">
           <Shield className="w-20 h-20 mx-auto mb-6" />
           <h1 className="text-5xl font-bold mb-4">זכויות הסטודנטים</h1>
           <p className="text-xl text-white/90">
@@ -48,7 +48,7 @@ const RightsPage = () => {
       </section>
 
       <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="space-y-4">
             {rights.map((right) => (
               <div
