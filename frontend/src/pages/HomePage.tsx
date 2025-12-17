@@ -1,14 +1,32 @@
 import { useState, useEffect } from 'react';
 import { ArrowLeft, Calendar, Users, Gift, MapPin, ChevronDown, Mail, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { eventsApi, departmentsApi } from '../lib/supabase';
-import type { Event, Department } from '../lib/supabase';
+import { eventsApi, departmentsApi } from '../lib/api';
 import * as LucideIcons from 'lucide-react';
+
+interface Event {
+  id: number;
+  title: string;
+  description: string;
+  eventDate: string;
+  location?: string;
+  imageUrl?: string;
+  isFeatured: boolean;
+}
+
+interface Department {
+  id: number;
+  name: string;
+  description: string;
+  icon?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+}
 
 export default function HomePage() {
   const [events, setEvents] = useState<Event[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
-  const [openDepartment, setOpenDepartment] = useState<string | null>(null);
+  const [openDepartment, setOpenDepartment] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,11 +48,11 @@ export default function HomePage() {
     loadData();
   }, []);
 
-  const toggleDepartment = (id: string) => {
+  const toggleDepartment = (id: number) => {
     setOpenDepartment(openDepartment === id ? null : id);
   };
 
-  const getIcon = (iconName: string | null) => {
+  const getIcon = (iconName: string | null | undefined) => {
     if (!iconName) return Users;
     const Icon = (LucideIcons as any)[iconName];
     return Icon || Users;
@@ -124,11 +142,11 @@ export default function HomePage() {
                   key={event.id}
                   className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
                 >
-                  {event.image_url && (
+                  {event.imageUrl && (
                     <div className="h-48 bg-gradient-to-br from-blue-500 to-cyan-500"></div>
                   )}
                   <div className="p-6">
-                    {event.is_featured && (
+                    {event.isFeatured && (
                       <span className="inline-block bg-blue-100 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full mb-3">
                         מומלץ
                       </span>
@@ -142,7 +160,7 @@ export default function HomePage() {
                     <div className="flex items-center gap-2 text-sm text-slate-500 mb-2">
                       <Calendar className="w-4 h-4" />
                       <span>
-                        {new Date(event.event_date).toLocaleDateString('he-IL', {
+                        {new Date(event.eventDate).toLocaleDateString('he-IL', {
                           day: 'numeric',
                           month: 'long',
                           year: 'numeric',
@@ -216,22 +234,22 @@ export default function HomePage() {
                           {department.description}
                         </p>
                         <div className="flex flex-wrap gap-4">
-                          {department.contact_email && (
+                          {department.contactEmail && (
                             <a
-                              href={`mailto:${department.contact_email}`}
+                              href={`mailto:${department.contactEmail}`}
                               className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700"
                             >
                               <Mail className="w-4 h-4" />
-                              {department.contact_email}
+                              {department.contactEmail}
                             </a>
                           )}
-                          {department.contact_phone && (
+                          {department.contactPhone && (
                             <a
-                              href={`tel:${department.contact_phone}`}
+                              href={`tel:${department.contactPhone}`}
                               className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700"
                             >
                               <Phone className="w-4 h-4" />
-                              {department.contact_phone}
+                              {department.contactPhone}
                             </a>
                           )}
                         </div>

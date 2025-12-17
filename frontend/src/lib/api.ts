@@ -62,3 +62,12 @@ export const authApi = {
   login: (data: { email: string; password: string }) =>
     apiClient.post('/auth/login', data),
 };
+
+export const eventsApi = {
+  getAll: () => apiClient.get('/events'),
+  getUpcoming: () => apiClient.get('/events/upcoming'),
+  getById: (id: number) => apiClient.get(`/events/${id}`),
+  create: (data: any) => apiClient.post('/events', data),
+  update: (id: number, data: any) => apiClient.put(`/events/${id}`, data),
+  delete: (id: number) => apiClient.delete(`/events/${id}`),
+};

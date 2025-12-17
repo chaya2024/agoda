@@ -14,6 +14,7 @@ namespace Backend.Data
         public DbSet<Department> Departments { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<TestTable> TestTables { get; set; }
+        public DbSet<Event> Events { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,6 +46,16 @@ namespace Backend.Data
                       .WithMany()
                       .HasForeignKey(e => e.AuthorId)
                       .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            modelBuilder.Entity<Event>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Title).IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Description).IsRequired();
+                entity.Property(e => e.EventDate).IsRequired();
+                entity.Property(e => e.Location).HasMaxLength(200);
+                entity.Property(e => e.ImageUrl).HasMaxLength(500);
             });
         }
     }
