@@ -37,7 +37,7 @@ const Navigation = () => {
           : 'bg-white/60 backdrop-blur-md'
         }`}
     >
-      <div className="max-w-7xl mx-auto px-8 sm:px-12 lg:px-16">
+      <div className="max-w-7xl mx-auto px-16 sm:px-24 lg:px-32">
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center space-x-3 space-x-reverse">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-sm">
