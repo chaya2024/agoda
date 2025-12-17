@@ -1,0 +1,8 @@
+[
+  { "id": 1, "title": "אירוע פתיחת שנה", "category": "אירועים", "url": "/gallery/אירוע פתיחת שנה.jpg" },
+  { "id": 2, "title": "יום ספורט", "category": "פעילויות", "url": "/gallery/יום ספורט.jpg" },
+  { "id": 3, "title": "חגיגת סיום", "category": "חגיגות", "url": "/gallery/חגיגת סיום.jpg" },
+  { "id": 4, "title": "פעילות קהילתית", "category": "קהילה", "url": "/gallery/פעילות קהילתית.jpg" },
+  { "id": 5, "title": "הופעה מוזיקלית", "category": "אירועים", "url": "/gallery/הופעה מוזיקלית.jpg" },
+  { "id": 6, "title": "סדנת יצירה", "category": "פעילויות", "url": "/gallery/סדנת יצירה.jpg" }
+]

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserPlus, Mail, Lock, User, Phone, AlertCircle } from 'lucide-react';
+import { UserPlus, Mail, User, Phone, AlertCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const RegisterPage = () => {
@@ -8,8 +8,6 @@ const RegisterPage = () => {
     fullName: '',
     email: '',
     phone: '',
-    password: '',
-    confirmPassword: '',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -26,21 +24,10 @@ const RegisterPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
-    if (formData.password !== formData.confirmPassword) {
-      setError('הסיסמאות אינן תואמות');
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      setError('הסיסמה חייבת להכיל לפחות 6 תווים');
-      return;
-    }
-
     setLoading(true);
 
     try {
-      const { error: signUpError } = await signUp(formData.email, formData.password, formData.fullName, formData.phone);
+      const { error: signUpError } = await signUp(formData.email, formData.fullName, formData.phone);
       if (signUpError) {
         setError('שגיאה בהרשמה. אנא נסה שוב.');
       } else {
@@ -123,42 +110,6 @@ const RegisterPage = () => {
                 className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="050-1234567"
                 dir="ltr"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              סיסמה
-            </label>
-            <div className="relative">
-              <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                placeholder="••••••••"
-                required
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              אימות סיסמה
-            </label>
-            <div className="relative">
-              <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                placeholder="••••••••"
-                required
               />
             </div>
           </div>

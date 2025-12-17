@@ -14,6 +14,7 @@ namespace Backend.Data
         public DbSet<Department> Departments { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<TestTable> TestTables { get; set; }
+        public DbSet<OtpCode> OtpCodes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,7 +25,6 @@ namespace Backend.Data
                 entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.Email).IsUnique();
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(255);
-                entity.Property(e => e.PasswordHash).IsRequired();
                 entity.Property(e => e.FullName).IsRequired().HasMaxLength(255);
                 entity.Property(e => e.Phone).HasMaxLength(20);
             });

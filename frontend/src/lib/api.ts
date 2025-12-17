@@ -57,8 +57,8 @@ export const departmentsApi = {
 };
 
 export const authApi = {
-  register: (data: { email: string; password: string; fullName: string; phone?: string }) =>
+  register: (data: { email: string; fullName: string; phone?: string }) =>
     apiClient.post('/auth/register', data),
-  login: (data: { email: string; password: string }) =>
+  login: (data: { email: string }) =>
     apiClient.post('/auth/login', data),
 };

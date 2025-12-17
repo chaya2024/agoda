@@ -11,8 +11,8 @@ interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
-  signUp: (email: string, password: string, fullName: string, phone?: string) => Promise<{ error: any }>;
+  signIn: (email: string) => Promise<{ error: any }>;
+  signUp: (email: string, fullName: string, phone?: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
 }
 
@@ -30,9 +30,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (email: string) => {
     try {
-      const data = await authApi.login({ email, password });
+      const data = await authApi.login({ email });
       setUser(data);
       localStorage.setItem('user', JSON.stringify(data));
       return { error: null };
@@ -41,9 +41,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signUp = async (email: string, password: string, fullName: string, phone?: string) => {
+  const signUp = async (email: string, fullName: string, phone?: string) => {
     try {
-      const data = await authApi.register({ email, password, fullName, phone });
+      const data = await authApi.register({ email, fullName, phone });
       setUser(data);
       localStorage.setItem('user', JSON.stringify(data));
       return { error: null };

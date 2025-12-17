@@ -17,10 +17,10 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/send-code', {
+      const response = await fetch('http://localhost:5000/api/auth/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phoneNumber, method }),
+        body: JSON.stringify({ phone: phoneNumber }), // שלח אובייקט עם phone
       });
 
       const data = await response.json();
@@ -43,10 +43,10 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/verify-code', {
+      const response = await fetch('http://localhost:5000/api/auth/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phoneNumber, code }),
+        body: JSON.stringify({ phone: phoneNumber, code }),
       });
 
       const data = await response.json();
