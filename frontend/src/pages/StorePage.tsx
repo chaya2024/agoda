@@ -26,8 +26,8 @@ const StorePage = () => {
   const filteredProducts = filter === 'all' ? products : products.filter(p => p.category === filter);
 
   return (
-    <div className="min-h-screen pt-20 pb-12">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="min-h-screen pb-[5vh] px-[5vw]">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 mt-12">
           <h1 className="text-5xl font-bold mb-4">חנות האגודה</h1>
           <p className="text-xl text-gray-600">מוצרים ייחודיים למען הסטודנטים</p>

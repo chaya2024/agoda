@@ -2,8 +2,8 @@
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen pt-20">
-      <section className="py-20 px-4 bg-gradient-to-br from-primary-500 to-primary-700 text-white">
+    <div className="min-h-screen pb-[5vh] px-[5vw]">
+      <section className="py-20 bg-gradient-to-br from-primary-500 to-primary-700 text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-6">אודות האגודה</h1>
           <p className="text-xl leading-relaxed">
@@ -13,7 +13,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      <section className="py-20 px-4 bg-white">
+      <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
             <div className="bg-gray-50 p-8 rounded-2xl text-center">

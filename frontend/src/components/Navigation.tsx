@@ -32,40 +32,38 @@ const Navigation = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-          ? 'bg-white shadow-lg'
-          : 'bg-white/95 backdrop-blur-sm'
+      className={`fixed top-0 left-0 right-0 w-full h-20 z-50 transition-all duration-300 ${scrolled
+          ? 'bg-white/80 backdrop-blur-md shadow-sm'
+          : 'bg-white/60 backdrop-blur-md'
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center space-x-3 space-x-reverse">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-xl">א</span>
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-sm">
+              <span className="text-white font-bold text-lg">א</span>
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
+              <h1 className="text-xl font-bold text-slate-800">
                 אגודת הסטודנטים
               </h1>
-              <p className="text-xs text-gray-600">האגודה שלך, הקול שלך</p>
+              <p className="text-xs text-slate-500">מכללת אונו</p>
             </div>
           </Link>
 
-          <div className="hidden lg:flex items-center space-x-1 space-x-reverse">
+          <div className="hidden lg:flex items-center gap-6 space-x-reverse">
             {navItems.map((item) => {
-              const Icon = item.icon;
               const isActive = location.pathname === item.path;
               return (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${isActive
-                      ? 'bg-primary-500 text-white shadow-md'
-                      : 'text-gray-700 hover:bg-primary-50 hover:text-primary-600'
+                  className={`px-5 py-2 transition-all duration-200 ${isActive
+                      ? 'text-blue-600 font-semibold'
+                      : 'text-slate-700 hover:text-blue-600'
                     }`}
                 >
-                  <Icon className="w-5 h-5" />
-                  <span className="font-medium">{item.label}</span>
+                  <span className="text-lg">{item.label}</span>
                 </Link>
               );
             })}
@@ -74,76 +72,73 @@ const Navigation = () => {
               <div className="flex items-center gap-2 mr-4">
                 <Link
                   to="/profile"
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 hover:bg-primary-200 hover:text-primary-600 transition-all duration-200"                >
-                  <User className="w-5 h-5" />
-                  <span className="font-medium">{user.full_name}</span>
+                  className="flex items-center gap-2 px-4 py-2 rounded-full text-slate-700 hover:bg-slate-100 hover:text-blue-600 transition-all duration-200"                >
+                  <User className="w-4 h-4" />
+                  <span className="font-medium text-sm">{user.fullName}</span>
                 </Link>
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 transition-all duration-200"
+                  className="flex items-center gap-2 px-3 py-2 rounded-full text-slate-700 hover:bg-red-50 hover:text-red-600 transition-all duration-200"
                 >
-                  <LogOut className="w-5 h-5" />
+                  <LogOut className="w-4 h-4" />
                 </button>
               </div>
             ) : (
               <Link
                 to="/login"
-                className="mr-4 flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg hover:from-primary-600 hover:to-primary-700 shadow-md hover:shadow-lg transition-all duration-200"
+                className="mr-12 px-5 py-2 text-blue-600 hover:opacity-80 transition-all duration-200"
               >
-                <User className="w-5 h-5" />
-                <span className="font-medium">התחברות</span>
+                <span className="font-semibold text-lg">איזור אישי</span>
               </Link>
             )}
           </div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+            className="lg:hidden p-2 rounded-full text-slate-700 hover:bg-slate-100 transition-colors"
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
       {isOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-100 animate-slide-down">
+        <div className="lg:hidden bg-white/95 backdrop-blur-md border-t border-slate-100 animate-slide-down">
           <div className="px-4 py-4 space-y-2">
             {navItems.map((item) => {
-              const Icon = item.icon;
               const isActive = location.pathname === item.path;
               return (
                 <Link
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${isActive
-                      ? 'bg-primary-500 text-white shadow-md'
-                      : 'text-gray-700 hover:bg-primary-50'
+                  className={`px-4 py-3 rounded-xl transition-all duration-200 text-center ${isActive
+                      ? 'text-blue-600 font-semibold bg-blue-50'
+                      : 'text-slate-700 hover:bg-slate-50'
                     }`}
                 >
-                  <Icon className="w-5 h-5" />
-                  <span className="font-medium">{item.label}</span>
+                  <span>{item.label}</span>
                 </Link>
               );
             })}
 
-            <div className="pt-2 border-t border-gray-200">
+            <div className="pt-2 border-t border-slate-100">
               {user ? (
                 <>
                   <Link
                     to="/profile"
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50"
                   >
                     <User className="w-5 h-5" />
-                    <span className="font-medium">{user.full_name}</span>
+                    <span className="font-medium">{user.fullName}</span>
                   </Link>
                   <button
                     onClick={() => {
                       handleSignOut();
                       setIsOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600"
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-700 hover:bg-red-50 hover:text-red-600"
                   >
                     <LogOut className="w-5 h-5" />
                     <span className="font-medium">התנתקות</span>
@@ -153,10 +148,9 @@ const Navigation = () => {
                 <Link
                   to="/login"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg shadow-md"
+                  className="px-6 py-4 border-2 border-blue-600 text-blue-600 rounded-xl hover:bg-blue-50 transition-all text-center"
                 >
-                  <User className="w-5 h-5" />
-                  <span className="font-medium">התחברות</span>
+                  <span className="font-medium">איזור אישי</span>
                 </Link>
               )}
             </div>

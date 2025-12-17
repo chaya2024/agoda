@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Assistant', 'sans-serif'],
+      },
       colors: {
         primary: {
           50: '#eff6ff',
