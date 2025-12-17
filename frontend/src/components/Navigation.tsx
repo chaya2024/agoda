@@ -51,7 +51,7 @@ const Navigation = () => {
             </div>
           </Link>
 
-          <div className="hidden lg:flex items-center gap-10 space-x-reverse">
+          <div className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
               return (
