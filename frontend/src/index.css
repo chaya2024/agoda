@@ -15,49 +15,59 @@ body {
   font-size: 22px;
 }
 
-html.grayscale {
-  filter: grayscale(100%);
+html.grayscale,
+html.grayscale body {
+  filter: grayscale(100%) !important;
+  -webkit-filter: grayscale(100%) !important;
 }
 
-html.high-contrast {
-  filter: contrast(150%);
+html.high-contrast,
+html.high-contrast body {
+  filter: contrast(200%) !important;
+  -webkit-filter: contrast(200%) !important;
 }
 
-html.invert-colors {
-  filter: invert(100%) hue-rotate(180deg);
+html.invert-colors,
+html.invert-colors body {
+  filter: invert(100%) hue-rotate(180deg) !important;
+  -webkit-filter: invert(100%) hue-rotate(180deg) !important;
 }
 
 html.invert-colors img,
 html.invert-colors video {
-  filter: invert(100%) hue-rotate(180deg);
+  filter: invert(100%) hue-rotate(180deg) !important;
+  -webkit-filter: invert(100%) hue-rotate(180deg) !important;
 }
 
-html.light-background body {
-  background-color: #ffffff !important;
-}
-
-html.light-background * {
-  background-color: transparent !important;
-}
-
+html.light-background,
+html.light-background body,
 html.light-background main,
 html.light-background section,
-html.light-background div {
+html.light-background div,
+html.light-background header,
+html.light-background footer {
   background-color: #ffffff !important;
+  background-image: none !important;
 }
 
-html.highlight-links a {
+html.highlight-links a,
+html.highlight-links a:link,
+html.highlight-links a:visited,
+html.highlight-links a:hover,
+html.highlight-links a:active {
   background-color: #ffff00 !important;
   color: #000000 !important;
   text-decoration: underline !important;
-  font-weight: bold !important;
+  font-weight: 700 !important;
+  padding: 2px 4px !important;
+  border-radius: 2px !important;
 }
 
-html.readable-font,
 html.readable-font * {
-  font-family: 'Arial', sans-serif !important;
-  letter-spacing: 0.05em !important;
-  line-height: 1.8 !important;
+  font-family: 'Arial', 'Helvetica', sans-serif !important;
+  letter-spacing: 0.08em !important;
+  line-height: 2 !important;
+  word-spacing: 0.15em !important;
 }
 
 @layer utilities {

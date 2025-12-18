@@ -68,7 +68,10 @@ const AccessibilityPanel = () => {
                 {accessibilityOptions.map((option, index) => (
                   <button
                     key={index}
-                    onClick={option.action}
+                    onClick={() => {
+                      console.log('Button clicked:', option.label);
+                      option.action();
+                    }}
                     className={`w-full flex items-center justify-end gap-3 px-4 py-3 rounded-lg transition-all duration-200 text-right ${
                       option.active
                         ? 'bg-blue-50 text-blue-700 border-2 border-blue-300'

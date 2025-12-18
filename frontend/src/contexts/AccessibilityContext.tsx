@@ -90,14 +90,53 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
     console.log('HTML classes:', document.documentElement.className);
   }, [fontSize, grayscale, highContrast, invertColors, lightBackground, highlightLinks, readableFont]);
 
-  const increaseFontSize = () => setFontSize(prev => Math.min(prev + 10, 150));
-  const decreaseFontSize = () => setFontSize(prev => Math.max(prev - 10, 80));
-  const toggleGrayscale = () => setGrayscale(prev => !prev);
-  const toggleHighContrast = () => setHighContrast(prev => !prev);
-  const toggleInvertColors = () => setInvertColors(prev => !prev);
-  const toggleLightBackground = () => setLightBackground(prev => !prev);
-  const toggleHighlightLinks = () => setHighlightLinks(prev => !prev);
-  const toggleReadableFont = () => setReadableFont(prev => !prev);
+  const increaseFontSize = () => {
+    console.log('Increasing font size');
+    setFontSize(prev => {
+      const newSize = Math.min(prev + 10, 150);
+      console.log('New font size:', newSize);
+      return newSize;
+    });
+  };
+
+  const decreaseFontSize = () => {
+    console.log('Decreasing font size');
+    setFontSize(prev => {
+      const newSize = Math.max(prev - 10, 80);
+      console.log('New font size:', newSize);
+      return newSize;
+    });
+  };
+
+  const toggleGrayscale = () => {
+    console.log('Toggling grayscale');
+    setGrayscale(prev => !prev);
+  };
+
+  const toggleHighContrast = () => {
+    console.log('Toggling high contrast');
+    setHighContrast(prev => !prev);
+  };
+
+  const toggleInvertColors = () => {
+    console.log('Toggling invert colors');
+    setInvertColors(prev => !prev);
+  };
+
+  const toggleLightBackground = () => {
+    console.log('Toggling light background');
+    setLightBackground(prev => !prev);
+  };
+
+  const toggleHighlightLinks = () => {
+    console.log('Toggling highlight links');
+    setHighlightLinks(prev => !prev);
+  };
+
+  const toggleReadableFont = () => {
+    console.log('Toggling readable font');
+    setReadableFont(prev => !prev);
+  };
 
   const resetAccessibility = () => {
     setFontSize(100);
