@@ -15,16 +15,49 @@ body {
   font-size: 22px;
 }
 
-.high-contrast {
-  filter: contrast(1.5);
+html.grayscale {
+  filter: grayscale(100%);
 }
 
-.large-text {
-  font-size: 1.2em;
+html.high-contrast {
+  filter: contrast(150%);
 }
 
-.larger-text {
-  font-size: 1.4em;
+html.invert-colors {
+  filter: invert(100%) hue-rotate(180deg);
+}
+
+html.invert-colors img,
+html.invert-colors video {
+  filter: invert(100%) hue-rotate(180deg);
+}
+
+html.light-background body {
+  background-color: #ffffff !important;
+}
+
+html.light-background * {
+  background-color: transparent !important;
+}
+
+html.light-background main,
+html.light-background section,
+html.light-background div {
+  background-color: #ffffff !important;
+}
+
+html.highlight-links a {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+  text-decoration: underline !important;
+  font-weight: bold !important;
+}
+
+html.readable-font,
+html.readable-font * {
+  font-family: 'Arial', sans-serif !important;
+  letter-spacing: 0.05em !important;
+  line-height: 1.8 !important;
 }
 
 @layer utilities {
