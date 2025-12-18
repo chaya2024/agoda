@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { ArrowLeft, Calendar, Users, Gift, MapPin, ChevronDown, Mail, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { eventsApi, departmentsApi } from '../lib/api';
@@ -260,24 +260,6 @@ export default function HomePage() {
               })}
             </div>
           )}
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl p-8 md:p-12 text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            רוצים להיות חלק מהקהילה?
-          </h2>
-          <p className="text-xl mb-6 opacity-90">
-            הצטרפו לאגודת הסטודנטים עוד היום ותהנו מכל היתרונות
-          </p>
-          <Link
-            to="/register"
-            className="inline-block bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:shadow-xl transition-all"
-          >
-            הצטרפו עכשיו
-          </Link>
         </div>
       </section>
     </div>

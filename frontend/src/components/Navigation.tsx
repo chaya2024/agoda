@@ -32,13 +32,13 @@ const Navigation = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 w-full h-20 z-50 transition-all duration-300 ${scrolled
+      className={`fixed top-0 left-0 right-0 w-full h-16 z-50 transition-all duration-300 ${scrolled
           ? 'bg-white/80 backdrop-blur-md shadow-sm'
           : 'bg-white/60 backdrop-blur-md'
         }`}
     >
-      <div className="max-w-7xl mx-auto px-16 sm:px-24 lg:px-32">
-        <div className="flex justify-between items-center h-20">
+      <div className="max-w-7xl mx-auto" style={{ paddingLeft: '2%', paddingRight: '2%' }}>
+        <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-3 space-x-reverse">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-sm">
               <span className="text-white font-bold text-lg">א</span>
@@ -86,7 +86,7 @@ const Navigation = () => {
             ) : (
               <Link
                 to="/login"
-                className="mr-12 px-5 py-2 text-blue-600 hover:opacity-80 transition-all duration-200"
+                className="mr-16 inline-block px-16 py-2 border-t border-b border-blue-600 text-blue-600 hover:bg-blue-50 transition-all duration-200"
               >
                 <span className="font-semibold text-lg">איזור אישי</span>
               </Link>
