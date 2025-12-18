@@ -40,14 +40,20 @@ html.invert-colors video {
 }
 
 html.light-background,
-html.light-background body,
+html.light-background body {
+  background-color: #f5f7fa !important;
+  background-image: linear-gradient(to bottom, #f5f7fa 0%, #ffffff 100%) !important;
+}
+
+html.light-background * {
+  background-color: transparent !important;
+}
+
 html.light-background main,
 html.light-background section,
-html.light-background div,
-html.light-background header,
-html.light-background footer {
+html.light-background .bg-white {
   background-color: #ffffff !important;
-  background-image: none !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
 }
 
 html.highlight-links a,
@@ -55,16 +61,14 @@ html.highlight-links a:link,
 html.highlight-links a:visited,
 html.highlight-links a:hover,
 html.highlight-links a:active {
-  background-color: #ffff00 !important;
-  color: #000000 !important;
   text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 4px !important;
   font-weight: 700 !important;
-  padding: 2px 4px !important;
-  border-radius: 2px !important;
 }
 
 html.readable-font * {
-  font-family: 'Arial', 'Helvetica', sans-serif !important;
+  font-family: 'Calibri', 'Arial', 'Helvetica', sans-serif !important;
   letter-spacing: 0.08em !important;
   line-height: 2 !important;
   word-spacing: 0.15em !important;
