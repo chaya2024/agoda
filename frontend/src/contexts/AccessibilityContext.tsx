@@ -61,12 +61,33 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
 
     document.documentElement.style.fontSize = `${fontSize}%`;
 
-    if (grayscale) classList.add('grayscale');
-    if (highContrast) classList.add('high-contrast');
-    if (invertColors) classList.add('invert-colors');
-    if (lightBackground) classList.add('light-background');
-    if (highlightLinks) classList.add('highlight-links');
-    if (readableFont) classList.add('readable-font');
+    if (grayscale) {
+      classList.add('grayscale');
+      console.log('Grayscale enabled');
+    }
+    if (highContrast) {
+      classList.add('high-contrast');
+      console.log('High contrast enabled');
+    }
+    if (invertColors) {
+      classList.add('invert-colors');
+      console.log('Invert colors enabled');
+    }
+    if (lightBackground) {
+      classList.add('light-background');
+      console.log('Light background enabled');
+    }
+    if (highlightLinks) {
+      classList.add('highlight-links');
+      console.log('Highlight links enabled');
+    }
+    if (readableFont) {
+      classList.add('readable-font');
+      console.log('Readable font enabled');
+    }
+
+    console.log('Font size:', fontSize + '%');
+    console.log('HTML classes:', document.documentElement.className);
   }, [fontSize, grayscale, highContrast, invertColors, lightBackground, highlightLinks, readableFont]);
 
   const increaseFontSize = () => setFontSize(prev => Math.min(prev + 10, 150));
